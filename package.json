@@ -6,7 +6,8 @@
     "start": "dcl start",
     "build": "build-ecs",
     "watch": "build-ecs --watch",
-    "deploy:now": "dcl export && now export",
+    "deploy": "build-ecs --production && dcl deploy",
+    "deploy:test": "build-ecs && dcl deploy --target peer-testing.decentraland.org",
     "ecs:install": "npm install --save-dev decentraland-ecs@latest",
     "ecs:install-next": "npm install --save-dev decentraland-ecs@next"
   },
