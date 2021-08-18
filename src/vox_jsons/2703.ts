@@ -1,4 +1,4 @@
-{
+export default {
   "name": "Factory Worker VOX #2703",
   "description": "VOX are unique collectibles, with provably randomized traits. Own, trade, play and earn with your unique NFT character.",
   "external_url": "https://www.collectvox.com/store/town-star/2703",

@@ -1,52 +1,44 @@
 import * as ui from "@dcl/ui-scene-utils";
 
+import vox_578 from "vox_jsons/578"
+import vox_3105 from "vox_jsons/3105"
+import vox_7910 from "vox_jsons/7910"
+import vox_6684 from "vox_jsons/6684"
+import vox_2703 from "vox_jsons/2703"
+
 export class createModel {
+    static opensea_baseurl = 'https://opensea.io/assets/0xad9fd7cb4fc7a0fbce08d64068f60cbde22ed34c/'
 
     static VoxterData = [
         {
             voxnumber: '578',
             transform: { x: 8, z: 8 },
-            name: "Weaver VOX #578",
-            outfit: "Fashion Designer",
-            hairstyle: "Curly",
-            facialhair: "Hungarian Mustache",
-            link: "https://opensea.io/assets/0xad9fd7cb4fc7a0fbce08d64068f60cbde22ed34c/1162"
+            data: vox_578,
+            token_id: "1162"
         },
         {
             voxnumber: '3105',
             transform: { x: 4, z: 12 },
-            name: "Farmer VOX #3105",
-            outfit: "Farmer Dungarees",
-            hairstyle: "Cornrows",
-            facialhair: "Hungarian Mustache",
-            link: "https://opensea.io/assets/0xad9fd7cb4fc7a0fbce08d64068f60cbde22ed34c/3689"
+            data: vox_3105,
+            token_id: "3689"
         },
         {
             voxnumber: '1',
             transform: { x: 12, z: 4 },
-            name: "Freight Captain VOX #6684",
-            outfit: "Admiral Uniform Day Off",
-            hairstyle: "Cornrows",
-            facialhair: "Brush Mustache",
-            link: "https://opensea.io/assets/0xad9fd7cb4fc7a0fbce08d64068f60cbde22ed34c/7268"
+            data: vox_6684,
+            token_id: "7268"
         },
         {
             voxnumber: '7910',
             transform: { x: 4, z: 4 },
-            name: "Lumberjack VOX #7910",
-            outfit: "Lumberjack Date Night",
-            hairstyle: "Ponytail",
-            facialhair: "Goatee Beard",
-            link: "https://opensea.io/assets/0xad9fd7cb4fc7a0fbce08d64068f60cbde22ed34c/8494"
+            data: vox_7910,
+            token_id: "8494"
         },
         {
             voxnumber: '2703',
             transform: { x: 12, z: 12 },
-            name: "Factory Worker VOX #2703",
-            outfit: "Metal Worker",
-            hairstyle: "Bangs",
-            facialhair: "Handlebar Mustache",
-            link: "https://opensea.io/assets/0xad9fd7cb4fc7a0fbce08d64068f60cbde22ed34c/3287"
+            data: vox_2703,
+            token_id: "3287"
         },
     ]
     Create(scene) {
@@ -90,16 +82,21 @@ export class createModel {
             }))
             Collider.addComponentOrReplace(CollMaterial)
 
+            const dispay_attrs = ['Outfit', 'Hair Color', 'Facial Hair', 'Hair Style']
+            let description = ''
+            mData.data.attributes.filter(x => dispay_attrs.indexOf(x.trait_type) >= 0)
+                .every(x => {
+                    description += x.trait_type + ': ' + x.value + '\n'
+                    return true
+                })
             //InfoMBox
             Collider.addComponent(
                 new OnPointerDown(async () => {
                     let prompt = new ui.OptionPrompt(
-                        'Name: ' + mData.name,
-                        'Outfit: ' +mData.outfit + '\n' + '\n' +
-                        'Hair Style: ' + mData.hairstyle + '\n' + '\n' +
-                        'Facial Hair: ' + mData.facialhair,
+                        mData.data.name,
+                        description,
                         () => {
-                            openExternalURL(mData.link)
+                            openExternalURL(createModel.opensea_baseurl+mData.token_id)
                         },
                         () => {
                             prompt.close()
@@ -108,7 +105,7 @@ export class createModel {
                         'Close'
                     )
                 }, {
-                    hoverText: mData.name,
+                    hoverText: mData.data.name,
                     distance: 5,
                     button: ActionButton.POINTER
                 })

@@ -1,4 +1,4 @@
-{
+export default {
   "name": "Freight Captain VOX #6684",
   "description": "VOX are unique collectibles, with provably randomized traits. Own, trade, play and earn with your unique NFT character.",
   "external_url": "https://www.collectvox.com/store/town-star/6684",
